@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
 import ImagePicker from '../ImagePicker.jsx';
-import {useQuery} from "@tanstack/react-query";
-import {fetchSelectableImages} from "../../Utils/http.js";
+import { useQuery } from "@tanstack/react-query";
+import { fetchSelectableImages } from "../../Utils/http.js";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 
 export default function EventForm({ inputData, onSubmit, children }) {
   const [selectedImage, setSelectedImage] = useState(inputData?.image);
- const {data, isPending, isError, error}=useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ['events-images'],
     queryFn: fetchSelectableImages
- })
+  })
   function handleSelectImage(image) {
     setSelectedImage(image);
   }
@@ -35,17 +35,17 @@ export default function EventForm({ inputData, onSubmit, children }) {
           defaultValue={inputData?.title ?? ''}
         />
       </p>
-        {isPending && <p>Loading images...</p>}
-        {isError && <ErrorBlock title='Failed to load images' message={error.info?.messages || "Failed to load images please try again later."} />}
-        {data && (
-            <div className="control">
-                <ImagePicker
-                    images={data}
-                    onSelect={handleSelectImage}
-                    selectedImage={selectedImage}
-                />
-            </div>
-        )}
+      {isPending && <p>Loading images...</p>}
+      {isError && <ErrorBlock title='Failed to load images' message={error.info?.messages || "Failed to load images please try again later."} />}
+      {data && (
+        <div className="control">
+          <ImagePicker
+            images={data}
+            onSelect={handleSelectImage}
+            selectedImage={selectedImage}
+          />
+        </div>
+      )}
 
 
       <p className="control">
@@ -89,7 +89,7 @@ export default function EventForm({ inputData, onSubmit, children }) {
         />
       </p>
 
-      <p className="form-actions">{children}</p>
+      <div className="form-actions">{children}</div>
     </form>
   );
 }
